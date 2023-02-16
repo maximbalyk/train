@@ -1,0 +1,48 @@
+.carousel {
+    width: 300px;
+    overflow: hidden;
+}
+
+.inner {
+    white-space: nowrap;
+    transition: transform 0.3s;
+}
+
+.carousel-item {
+    width: 100px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: #000;
+}
+
+.indicators {
+    display: flex;
+    justify-content: center;
+}
+
+.indicators>button {
+    margin: 5px;
+}
+
+.card{
+    display: flex;
+    padding: 10px;
+    height: 100%;
+    max-width: 250px;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+
+    background-color: #c3c3c3;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+h1,h2,h3,h4{
+    margin: 0;
+}
+p{
+    margin: 0;
+}
