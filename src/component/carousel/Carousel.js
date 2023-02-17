@@ -1,70 +1,77 @@
-import React, {useState} from "react";
-import "./Carousel.css"
+import React, { useState } from "react";
+import "./Carousel.css";
+import { useSwipeable } from "react-swipeable";
 
-export const CarouselItem = ({children, width,price}) => {
-    return(
-        <div className="carousel-item" style={{width: width}}>
-            <div className="card">
-                <div className="head">
-                    <h2>{children}</h2>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div className="price">{price}</div>
-            </div>
+const Carousel = ({ children }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
 
-        </div>
-    )
-}
-
-const Carousel = ({children}) => {
-    const [activeIndex, setActiveIndex] = useState(0)
-
-    const updateIndex = (newIndex) => {
-        if (newIndex < 0) {
-            newIndex = 0;
-        } else if (newIndex >= React.Children.count(children)){
-            newIndex = React.Children.count(children) - 1
-        }
-
-        setActiveIndex(newIndex)
+  const updateIndex = (newIndex) => {
+    if (newIndex < 0) {
+      newIndex = 0;
+    } else if (newIndex >= React.Children.count(children)) {
+      newIndex = React.Children.count(children) - 1;
     }
-    return(
-        <div className="carousel">
-            <div
-                className="inner"
-                style={{ transform: `translate(-${activeIndex * 100}%)`}}>
-                {React.Children.map(children, (child,index) => {
-                    return React.cloneElement(child, {width:"100%"})
-                })}
-            </div>
-            <div className="indicators">
-                <button
-                    onClick={() => {
-                        updateIndex(activeIndex-1)
-                    }}
-                >
-                    prev
-                </button>
-                {React.Children.map(children, (child,index) => {
-                    return(
-                        <button
-                            onClick={() => {
-                            updateIndex(index)
-                            }}
-                        >
-                            {index+1}
-                        </button>
-                    )
-                })}
-                <button
-                    onClick={() => {
-                        updateIndex(activeIndex+1)
-                    }}
-                >
-                    next
-                </button>
-            </div>
+
+    setActiveIndex(newIndex);
+  };
+
+  const handlers = useSwipeable({
+    onSwipedLeft: () => updateIndex(activeIndex + 1),
+    onSwipedRight: () => updateIndex(activeIndex - 1),
+  });
+
+  return (
+    <>
+      <div {...handlers} className="carousel">
+        <div
+          {...handlers}
+          className="inner"
+          style={{ transform: `translate(-${activeIndex * 50}%)` }}
+        >
+          {React.Children.map(children, (child) => {
+            return React.cloneElement(child, { width: "50%" });
+          })}
         </div>
-    )
-}
-export default Carousel
+      </div>
+      <div className="indicators">
+        <button
+          className="glowing-btn"
+          onClick={() => {
+            updateIndex(activeIndex - 1);
+          }}
+        >
+          <span className="glowing-txt">
+            P<span className="faulty-letter">R</span>EV
+          </span>
+        </button>
+        {React.Children.map(children, (child, index) => {
+          return (
+            <button
+              className={`${
+                index === activeIndex
+                  ? "active glowing-btn-number"
+                  : "glowing-btn-number"
+              }`}
+              onClick={() => {
+                updateIndex(index);
+              }}
+            >
+              {index + 1}
+            </button>
+          );
+        })}
+        <button
+          className="glowing-btn"
+          onClick={() => {
+            updateIndex(activeIndex + 1);
+          }}
+        >
+          <span className="glowing-txt">
+            N<span className="faulty-letter">E</span>XT
+          </span>
+        </button>
+      </div>
+    </>
+  );
+};
+export default Carousel;

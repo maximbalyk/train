@@ -1,10 +1,18 @@
-import './App.css';
+import "./App.css";
+import Carousel from "./component/carousel/Carousel";
+import { CarouselItem } from "./component/carousel/CarouselItem";
 
-export const CarouselItem = ({children,  width}) => {
-    return (
-        <div className="carousel-item" style={{width: width}}>
-            {children}
-        </div>
-    );
+function App() {
+  return (
+    <div className="App">
+      <Carousel>
+        <CarouselItem price={100}>Maksym Balyk</CarouselItem>
+        <CarouselItem price={200}>Vitaliy Bondar</CarouselItem>
+        <CarouselItem price={300}>Solomiya Fox</CarouselItem>
+        <CarouselItem price={400}>Jack Bear</CarouselItem>
+      </Carousel>
+    </div>
+  );
 }
-export default CarouselItem;
+
+export default App;
